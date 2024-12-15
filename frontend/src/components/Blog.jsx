@@ -8,7 +8,7 @@ function Blog() {
     const [blogs, setBlogs] = useState([]);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [admin, setAdmin] = useState([false])
+    const [admin, setAdmin] = useState(false)
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -24,6 +24,7 @@ function Blog() {
                 }
             } else {
                 console.log("User logged Out");
+                setAdmin(false)
             }
         })
 
