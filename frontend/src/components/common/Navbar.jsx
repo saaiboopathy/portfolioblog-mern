@@ -36,6 +36,7 @@ function Navbar() {
                 <Link className='list-none px-5' to={"/blog"}>Blogs</Link>
                 <Link className="list-none px-5" to={"/project"}>Projects</Link>
                 <Link className='list-none px-5'>About</Link>
+                <Link className='list-none px-5' to={'/contact'}>Contact</Link>
                 {
                     log ? <button className='button-style hidden md:block' onClick={logOut}>Logout</button> : <button className='button-style hidden md:block' onClick={() => navigate("/login")}>Login</button>
                 }
