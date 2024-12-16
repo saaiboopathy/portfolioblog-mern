@@ -29,7 +29,7 @@ function Blog() {
         })
 
 
-        axios.get("http://localhost:5000/api/blogs").then((res) => {
+        axios.get("https://portfolioblog-mern.onrender.com/api/blogs").then((res) => {
             console.log(res.data);
             setBlogs(res.data);
         }).catch((err) => {
@@ -40,7 +40,7 @@ function Blog() {
     // Function to handle liking a blog
     const handleLike = async (blogId) => {
         try {
-            const response = await axios.patch(`http://localhost:5000/api/blogs/like/${blogId}`);
+            const response = await axios.patch(`https://portfolioblog-mern.onrender.com/api/blogs/like/${blogId}`);
             if (response.status === 200) {
                 // After successful like, update the blogs list
                 const updatedBlogs = await axios.get("http://localhost:5000/api/blogs");
@@ -59,10 +59,10 @@ function Blog() {
 
         const likes = 0;
 
-        axios.post("http://localhost:5000/api/blogs", { title, content, date, likes }).then((res) => {
+        axios.post("https://portfolioblog-mern.onrender.com/api/blogs", { title, content, date, likes }).then((res) => {
             console.log(res.data);
 
-            axios.get("http://localhost:5000/api/blogs").then((res) => {
+            axios.get("https://portfolioblog-mern.onrender.com/api/blogs").then((res) => {
                 console.log(res.data);
                 setBlogs(res.data);
             }).catch(() => {
