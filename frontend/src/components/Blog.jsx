@@ -23,14 +23,12 @@ function Blog() {
                     setAdmin(false);
                 }
             } else {
-                console.log("User logged Out");
                 setAdmin(false)
             }
         })
 
 
         axios.get("https://portfolioblog-mern.onrender.com/api/blogs").then((res) => {
-            console.log(res.data);
             setBlogs(res.data);
         }).catch((err) => {
             console.log("Error fetching data", err);
@@ -60,14 +58,17 @@ function Blog() {
         const likes = 0;
 
         axios.post("https://portfolioblog-mern.onrender.com/api/blogs", { title, content, date, likes }).then((res) => {
-            console.log(res.data);
+            console.log("Blog posted",res.data);
 
+            //fetches latest blogs 
             axios.get("https://portfolioblog-mern.onrender.com/api/blogs").then((res) => {
                 console.log(res.data);
                 setBlogs(res.data);
-            }).catch(() => {
-                console.log("Error fetching data");
+            }).catch((err) => {
+                console.log("Error fetching data from the blog",err);
             });
+        }).catch((err)=>{
+            console.log("error posting the blog",err)
         });
 
         setTitle('');

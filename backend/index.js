@@ -15,7 +15,7 @@ app.use(cors())
 mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log("MongoDB Connected");
 }).catch((err) => {
-    console.log(err);
+    console.log("Error connecting to MongoDB",err);
 });
 
 //Connecting Schema
@@ -95,5 +95,5 @@ app.post('/api/blogs', async (req, res) => {
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
-    console.log("The server is running in port 5000")
+    console.log(`The server is running in port ${port}`)
 })
