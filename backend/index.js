@@ -4,6 +4,7 @@ const cors = require('cors')
 
 const bodyParser = require("body-parser")
 const { default: mongoose } = require("mongoose")
+require('dotenv').config();
 
 
 const app = express()
@@ -11,11 +12,11 @@ app.use(bodyParser.json());
 app.use(cors())
 
 //Connecting MongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/blogDB').then(() => {
-    console.log("MongoDB Connected")
+mongoose.connect(process.env.MONGO_URI).then(() => {
+    console.log("MongoDB Connected");
 }).catch((err) => {
-    console.log(err)
-})
+    console.log(err);
+});
 
 //Connecting Schema
 const blogSchema = new mongoose.Schema({
@@ -43,28 +44,28 @@ app.get('/api/blogs', async (req, res) => {
 
 app.patch('/api/blogs/like/:id', async (req, res) => {
     try {
-      // Step 1: Get the blog by ID from the database
-      const blog = await Blog.findById(req.params.id);
-  
-      // Step 2: If the blog doesn't exist, send an error message
-      if (!blog) {
-        return res.status(404).json({ message: 'Blog not found' });
-      }
-  
-      // Step 3: If the blog exists, increase the like count by 1
-      const updatedBlog = await Blog.findByIdAndUpdate(
-        req.params.id,          // Use the blog ID from the URL
-        { $inc: { likes: 1 } },  // Increment the likes by 1
-        { new: true }            // Return the updated blog
-      );
-  
-      // Step 4: Send the updated blog back to the frontend
-      res.json(updatedBlog);
+        // Step 1: Get the blog by ID from the database
+        const blog = await Blog.findById(req.params.id);
+
+        // Step 2: If the blog doesn't exist, send an error message
+        if (!blog) {
+            return res.status(404).json({ message: 'Blog not found' });
+        }
+
+        // Step 3: If the blog exists, increase the like count by 1
+        const updatedBlog = await Blog.findByIdAndUpdate(
+            req.params.id,          // Use the blog ID from the URL
+            { $inc: { likes: 1 } },  // Increment the likes by 1
+            { new: true }            // Return the updated blog
+        );
+
+        // Step 4: Send the updated blog back to the frontend
+        res.json(updatedBlog);
     } catch (err) {
-      // Step 5: If something goes wrong, send an error message
-      res.status(500).json({ message: err.message });
+        // Step 5: If something goes wrong, send an error message
+        res.status(500).json({ message: err.message });
     }
-  });
+});
 
 
 
