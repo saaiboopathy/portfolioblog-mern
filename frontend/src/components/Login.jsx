@@ -56,7 +56,7 @@ function Login() {
 
                     <div className="flex flex-col gap-3 flex-wrap">
                         <label className="text-black font-semibold text-xl">Password:</label>
-                        <input type="text"
+                        <input type="password"
                             onChange={handlepass}
                             className="w-2/5 border rounded-lg p-2"
                             placeholder="Enter your Password :"></input>
