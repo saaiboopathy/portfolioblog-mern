@@ -29,19 +29,21 @@ function Navbar() {
     }
 
     return (
-        <div className='p-5 flex justify-between items-center font-bold text-xl bg-slate-100'>
-            <h2 className='text-2xl font-bold'>Personal</h2>
+        <div className='p-5 flex justify-between items-center font-bold text-xl bg-gray-800'>
+            <h2 className='text-3xl font-bold text-white font-oswald'>Personal</h2>
             <div className='flex items-center'>
-                <Link className='list-none px-5' to={"/home"}>Home</Link>
-                <Link className='list-none px-5' to={"/blog"}>Blogs</Link>
-                <Link className="list-none px-5" to={"/project"}>Projects</Link>
-                <Link className='list-none px-5'>About</Link>
-                <Link className='list-none px-5' to={'/contact'}>Contact</Link>
+                <Link className='list-none px-5 text-gray-300 hover:text-white transition duration-200' to={"/home"}>Home</Link>
+                <Link className='list-none px-5 text-gray-300 hover:text-white transition duration-200' to={"/blog"}>Blogs</Link>
+                <Link className="list-none px-5 text-gray-300 hover:text-white transition duration-200" to={"/project"}>Projects</Link>
+                <Link className='list-none px-5 text-gray-300 hover:text-white transition duration-200'>About</Link>
+                <Link className='list-none px-5 text-gray-300 hover:text-white transition duration-200' to={'/contact'}>Contact</Link>
                 {
-                    log ? <button className='button-style hidden md:block' onClick={logOut}>Logout</button> : <button className='button-style hidden md:block' onClick={() => navigate("/login")}>Login</button>
+                    log ? <button className='button-style hidden md:block' onClick={logOut}>Logout</button> 
+                    : <button className='button-style hidden md:block' onClick={() => navigate("/login")}>Login</button>
                 }
             </div>
-        </div>)
+        </div>
+    )
 }
 
 export default Navbar;

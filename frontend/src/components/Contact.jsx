@@ -1,65 +1,71 @@
-import React from 'react';
-import resume from '../assets/Resume.pdf'
+import React, { useState } from 'react';
+import axios from 'axios';
 
 function Contact() {
-    return (
-        <div className="mt-10 flex flex-col items-center">
-            <h1 className="font-bold text-2xl mb-6">Contact Me</h1>
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+    const [responseMessage, setResponseMessage] = useState('');
 
-            
-            <form className="w-3/4 md:w-1/2 lg:w-1/3 flex flex-col gap-6">
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // Create form data
+        const formData = {
+            name,
+            email,
+            message
+        };
+
+        try {
+            const response = await axios.post('https://portfolioblog-mern.onrender.com/api/contact', formData);
+            setResponseMessage('Message sent successfully!');
+        } catch (error) {
+            setResponseMessage('Error sending message, please try again later.');
+        }
+
+        // Reset form fields
+        setName('');
+        setEmail('');
+        setMessage('');
+    };
+
+    return (
+        <div className="flex flex-col items-center mt-10 bg-gray-900 text-white py-10">
+            <h1 className="text-3xl font-semibold mb-8">Contact Me</h1>
+            <form onSubmit={handleSubmit} className="w-full max-w-lg">
                 <input
                     type="text"
                     placeholder="Your Name"
-                    className="p-4 border-0 rounded-md bg-gray-100 focus:outline-none"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    className="w-full p-4 mb-4 bg-gray-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                     type="email"
                     placeholder="Your Email"
-                    className="p-4 border-0 rounded-md bg-gray-100 focus:outline-none"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="w-full p-4 mb-4 bg-gray-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <textarea
                     placeholder="Your Message"
-                    className="p-4 border-0 rounded-md bg-gray-100 h-32 focus:outline-none"
-                />
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    required
+                    className="w-full p-4 mb-4 bg-gray-800 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    rows="6"
+                ></textarea>
                 <button
                     type="submit"
-                    className="bg-black text-white p-2 rounded-md hover:text-black hover:bg-white transition duration-500 ease-in-out font-bold"
+                    className="w-full p-4 bg-blue-600 text-white rounded-md hover:bg-blue-500 transition duration-300"
                 >
-                    Send Message
+                    Send
                 </button>
             </form>
-
-            {/* Social Media Links */}
-            <div className="mt-10 flex gap-6">
-                <a
-                    href="https://www.linkedin.com/in/saaiboopathy"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-2xl text-blue-600"
-                >
-                    <i className="fab fa-linkedin"></i> LinkedIn
-                </a>
-                <a
-                    href="https://github.com/saaiboopathy"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-2xl text-gray-800"
-                >
-                    <i className="fab fa-github"></i> GitHub
-                </a>
-            </div>
-
-            {/* Download Resume/CV */}
-            <div className="mt-6">
-                <a
-                    href={resume}
-                    download
-                    className="bg-black text-white p-2 rounded-md hover:text-black hover:bg-white transition duration-500 ease-in-out font-bold"
-                >
-                    Download Resume
-                </a>
-            </div>
+            <p className="mt-6 text-xl italic">{responseMessage}</p>
         </div>
     );
 }

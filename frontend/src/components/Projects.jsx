@@ -1,7 +1,6 @@
-
 import React from "react";
-import project1 from "../assets/Project1.jpeg"
-import project2 from "../assets/Project2.jpeg"
+import project1 from "../assets/Project1.jpeg";
+import project2 from "../assets/Project2.jpeg";
 
 const projects = [
     {
@@ -32,50 +31,55 @@ const projects = [
 
 function Projects() {
     return (
-        <div className="py" >
+        <div className="py-16 bg-gray-100">
 
             <div className="text-center mt-10">
-                <h1 className="text-4xl font-bold">Projects</h1>
+                <h1 className="text-4xl font-bold text-gray-800">Projects</h1>
                 <p className="mt-4 text-lg text-gray-600">A collection of some of my recent work.</p>
             </div>
-
 
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6">
 
                 {projects.map((project) => (
-
                     <div key={project.id} className="bg-white shadow-md rounded-md overflow-hidden">
-                        <img
-                            src={project.image}
-                            alt={project.title}
-                            className="w-full h-48 object-cover"
-                        />
-
-
+                        <div className="relative">
+                            {project.image && (
+                                <img
+                                    src={project.image}
+                                    alt={project.title}
+                                    className="w-full h-48 object-cover"
+                                />
+                            )}
+                            {/* Add a dark overlay for better text visibility if the image exists */}
+                            <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+                        </div>
 
                         <div className="p-6">
                             <h2 className="text-xl font-semibold text-gray-800">{project.title}</h2>
                             <p className="mt-2 text-gray-600">{project.description}</p>
                             <div className="mt-4 flex gap-4">
-                                <a
-                                    href={project.liveLink}
-                                    target="_blank"
-                                    className="text-white bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
-                                >
-                                    Live Demo
-                                </a>
-                                <a
-                                    href={project.repoLink}
-                                    target="_blank"
-                                    className="text-blue-600 border border-blue-600 px-4 py-2 rounded hover:bg-blue-600 hover:text-white"
-                                >
-                                    View Code
-                                </a>
+                                {project.liveLink && (
+                                    <a
+                                        href={project.liveLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-white bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
+                                    >
+                                        Live Demo
+                                    </a>
+                                )}
+                                {project.repoLink && (
+                                    <a
+                                        href={project.repoLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-600 border border-blue-600 px-4 py-2 rounded hover:bg-blue-600 hover:text-white"
+                                    >
+                                        View Code
+                                    </a>
+                                )}
                             </div>
                         </div>
-
-
-                        
                     </div>
                 ))}
             </div>

@@ -2,11 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap');
 
-
-body{
+body {
   font-size: 16px;
-  background-color: #edebe4;
+  background-color: #121212; /* Dark background */
+  color: #eaeaea; /* Light text for contrast */
   padding: 20px;
-  font-family:monospace
+  font-family: 'Oswald', sans-serif;
 }
