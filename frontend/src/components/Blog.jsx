@@ -41,7 +41,7 @@ function Blog() {
             const response = await axios.patch(`https://portfolioblog-mern.onrender.com/api/blogs/like/${blogId}`);
             if (response.status === 200) {
                 // After successful like, update the blogs list
-                const updatedBlogs = await axios.get("http://localhost:5000/api/blogs");
+                const updatedBlogs = await axios.get("https://portfolioblog-mern.onrender.com/api/blogs");
                 setBlogs(updatedBlogs.data);
             }
         } catch (error) {
@@ -56,6 +56,8 @@ function Blog() {
         const date = today.toLocaleDateString('en-us', { year: 'numeric', day: 'numeric', month: 'long' });
 
         const likes = 0;
+
+        console.log("Sending Data:", { title, content, date, likes });
 
         axios.post("https://portfolioblog-mern.onrender.com/api/blogs", { title, content, date, likes }).then((res) => {
             console.log("Blog posted",res.data);

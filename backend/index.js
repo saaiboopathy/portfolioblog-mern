@@ -12,10 +12,12 @@ app.use(bodyParser.json());
 app.use(cors())
 
 //Connecting MongoDB
-mongoose.connect(process.env.MONGO_URI).then(() => {
+mongoose.connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 30000,
+}).then(() => {
     console.log("MongoDB Connected");
 }).catch((err) => {
-    console.log("Error connecting to MongoDB",err);
+    console.log("Error connecting to MongoDB", err);
 });
 
 //Connecting Schema
