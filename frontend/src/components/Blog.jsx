@@ -31,7 +31,7 @@ function Blog() {
                 setBlogs(res.data);
             })
             .catch((err) => {
-                console.log("Error fetching data", err);
+                console.log("Error fetching data.", err);
             });
     }, []);
 
