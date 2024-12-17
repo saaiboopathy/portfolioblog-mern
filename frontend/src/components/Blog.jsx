@@ -2,13 +2,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import auth from "../config/firebase";
 
-
 function Blog() {
-
     const [blogs, setBlogs] = useState([]);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [admin, setAdmin] = useState(false)
+    const [admin, setAdmin] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -23,16 +21,18 @@ function Blog() {
                     setAdmin(false);
                 }
             } else {
-                setAdmin(false)
+                setAdmin(false);
             }
-        })
-
-
-        axios.get("https://portfolioblog-mern.onrender.com/api/blogs").then((res) => {
-            setBlogs(res.data);
-        }).catch((err) => {
-            console.log("Error fetching data", err);
         });
+
+        // Fetch blogs from backend
+        axios.get("https://portfolioblog-mern.onrender.com/api/blogs")
+            .then((res) => {
+                setBlogs(res.data);
+            })
+            .catch((err) => {
+                console.log("Error fetching data", err);
+            });
     }, []);
 
     // Function to handle liking a blog
@@ -53,25 +53,28 @@ function Blog() {
         event.preventDefault();
 
         const today = new Date();
-        const date = today.toISOString()
-
+        const date = today.toISOString();
         const likes = 0;
 
         console.log("Sending Data:", { title, content, date, likes });
 
-        axios.post("https://portfolioblog-mern.onrender.com/api/blogs", { title, content, date, likes }).then((res) => {
-            console.log("Blog posted", res.data);
+        axios.post("https://portfolioblog-mern.onrender.com/api/blogs", { title, content, date, likes })
+            .then((res) => {
+                console.log("Blog posted", res.data);
 
-            //fetches latest blogs 
-            axios.get("https://portfolioblog-mern.onrender.com/api/blogs").then((res) => {
-                console.log(res.data);
-                setBlogs(res.data);
-            }).catch((err) => {
-                console.log("Error fetching data from the blog", err);
+                // Fetch latest blogs
+                axios.get("https://portfolioblog-mern.onrender.com/api/blogs")
+                    .then((res) => {
+                        console.log(res.data);
+                        setBlogs(res.data);
+                    })
+                    .catch((err) => {
+                        console.log("Error fetching data from the blog", err);
+                    });
+            })
+            .catch((err) => {
+                console.log("Error posting the blog", err.response ? err.response.data : err);
             });
-        }).catch((err) => {
-            console.log("error posting the blog", err.response ? err.response.data : err)
-        });
 
         setTitle('');
         setContent('');
@@ -81,8 +84,8 @@ function Blog() {
         <div className="mt-10 flex flex-col gap-5 items-center h-screen">
             <h1 className="font-bold text-2xl">Latest blogs</h1>
 
-            {
-                admin ? <form onSubmit={handlenewBlogSubmit} className="flex flex-col w-3/5 gap-6">
+            {admin && (
+                <form onSubmit={handlenewBlogSubmit} className="flex flex-col w-3/5 gap-6">
                     <input
                         type="text"
                         placeholder="Enter the title"
@@ -98,19 +101,18 @@ function Blog() {
                     />
                     <button
                         className="bg-black text-white p-2 border-0 rounded-md 
-                 hover:text-black hover:bg-white 
-                 transition duration-500 ease-in-out font-bold"
+                        hover:text-black hover:bg-white 
+                        transition duration-500 ease-in-out font-bold"
                     >
                         Add Blog
                     </button>
-                </form> : ""
-            }
-
+                </form>
+            )}
 
             <div>
                 {blogs.length > 0 ? (
                     blogs.map((item, index) => (
-                        <div key={item.id} className="w-3/5 mx-auto p-5 bg-white shadow-md rounded-md my-4">
+                        <div key={item._id} className="w-3/5 mx-auto p-5 bg-white shadow-md rounded-md my-4">
                             <h2 className="text-xl font-semibold text-gray-800 border-b pb-2 mb-4">
                                 {index + 1}. {item.title}
                             </h2>
@@ -121,7 +123,6 @@ function Blog() {
                                     className="flex items-center gap-1 font-semibold text-sm text-black p-1 rounded-md"
                                     onClick={() => handleLike(item._id)}
                                 >
-                                    {/* CDN-based SVG for the like icon */}
                                     <img
                                         src="https://cdn.jsdelivr.net/npm/heroicons@1.0.6/outline/thumb-up.svg"
                                         alt="Thumb Up"
@@ -139,7 +140,6 @@ function Blog() {
                     <p>No blogs yet.</p>
                 )}
             </div>
-
         </div>
     );
 }
