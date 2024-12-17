@@ -53,24 +53,24 @@ function Blog() {
         event.preventDefault();
 
         const today = new Date();
-        const date = today.toLocaleDateString('en-us', { year: 'numeric', day: 'numeric', month: 'long' });
+        const date = today.toISOString()
 
         const likes = 0;
 
         console.log("Sending Data:", { title, content, date, likes });
 
         axios.post("https://portfolioblog-mern.onrender.com/api/blogs", { title, content, date, likes }).then((res) => {
-            console.log("Blog posted",res.data);
+            console.log("Blog posted", res.data);
 
             //fetches latest blogs 
             axios.get("https://portfolioblog-mern.onrender.com/api/blogs").then((res) => {
                 console.log(res.data);
                 setBlogs(res.data);
             }).catch((err) => {
-                console.log("Error fetching data from the blog",err);
+                console.log("Error fetching data from the blog", err);
             });
-        }).catch((err)=>{
-            console.log("error posting the blog",err)
+        }).catch((err) => {
+            console.log("error posting the blog", err.response ? err.response.data : err)
         });
 
         setTitle('');

@@ -88,7 +88,7 @@ app.post('/api/blogs', async (req, res) => {
         res.status(200).json(savedBlog)
     }
     catch (err) {
-        res.status(400).json(err.message)
+        res.status(400).json({ message: "Error saving the blog", error: err.message })
     }
 
 })
