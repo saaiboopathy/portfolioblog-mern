@@ -8,7 +8,10 @@ const app = express();
 
 // CORS Configuration for Vercel Frontend
 const corsOptions = {
-    origin: 'https://saai-boopathys-projects.vercel.app', // Vercel Frontend URL
+    origin: [
+        'https://saai-boopathys-projects.vercel.app',  // Old origin
+        'https://portfolioblog-mern-48z8qp8lk-saai-boopathys-projects.vercel.app', // New origin
+    ],
     methods: ['GET', 'POST', 'PATCH'],
     credentials: true,
 };
